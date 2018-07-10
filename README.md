@@ -1,0 +1,2 @@
+This is a project of mine going back about 3 years (started summer 2015), where the goal was to build a 3D printable longboard battery pack, I have recently (as of V3_5) switched form 18650 Li-ion battery cells to a 32650 (32700) LiFePo4 cell, (approx) 2.8V @ 5.5AH nominal.
+This [current] design uses an 8s-2p configuration on my board, but you can expand it by 2s per cell module. My deck is a Moose Canadian Maple "freestyle" deck, which as far as I can tell are discontinued (insert sad-face here). 
