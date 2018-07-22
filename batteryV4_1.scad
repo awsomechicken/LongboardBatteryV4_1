@@ -55,9 +55,9 @@ translate([-61, 0, 0]) rotate([0, 0, 3.4]) for(j = [-1.5:1.5]) {
 }//*/
 
 //CenterHangars();
-//EndHangars(palce = 0);
+EndHangars(palce = 0);
 //EndHangarsHoles(palce = 0);
-powerSwitchHousing();
+//powerSwitchHousing();
 //pwrSW();
 
 //#translate([0, -28+9, 9]) mirror([0, 1, 0]) polygon([[-95,6.2],[-80,4.08],[-65,1.75],[-50,0.09],[50,0.09],[65,1.75],[80,4.08],[95,6.2]]);
@@ -296,6 +296,42 @@ module EndHangars(place){
 		}
 	}
 	//translate([0, 0, 4.9718]) color("red") cube(20);//
+}
+
+!EndFlexHangars();
+module EndFlexHangars(place){
+	//Hangars to connect the ends of the aluminum to the board, {13 June, 2018}
+	// 'place' determines if a z-flip is happening, because you need one for each end of the pack.
+	difference(){
+		cylDiam = 5;
+		difference(){
+			minkowski(){
+				difference(){
+					translate([0, -2.5, 0]) cube([55-cylDiam, 41, 30-cylDiam], center = true);//main body
+
+					translate([0, 0, 20]) rotate([-20, 0, 0]) cube([50, 50, 20], center = true);
+				}
+				rotate([90, 0, 0]) cylinder(d = cylDiam, h = 1, $fn = 6);
+			}
+			translate([61, -3.65, 0]) rotate([0, 0, -3.4]) deck(H = 80, F = true, G = false);//Deck Shape, with furrows
+		}//*/
+
+		translate([18, 16.675, -8]) rotate([-90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//Brass insert, Rail side
+		translate([0, 16.675, -3]) rotate([-90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//Brass insert, Rail side
+		translate([-18, 16.675, -8]) rotate([-90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//Brass insert, Rail side
+
+		LVP = 8;//verticle position (Z) for the Deck side mounting holes
+
+		translate([20, -18, -LVP]) rotate([90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//+Z Brass insert, Deck side
+		translate([-20, -18, -LVP]) rotate([90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//+Z Brass insert, Deck side
+		translate([20, -19, LVP]) rotate([-90, 0, 0]) M5(20, 25, 0.05);//-Z Fastner, Deck side
+		translate([-20, -19, LVP]) rotate([-90, 0, 0]) M5(20, 25, 0.05);//-Z Fastner, Deck side
+
+		for(i = [0:1]) translate([0, 18*i-12, 0]) scale([25, 8, 1]) cylinder(d = 1, h = 45, center = true, $fn = 36);
+		for(i = [-0.5:0.5]) translate([40*i, -3, 0]) scale([25, 8, 1]) cylinder(d = 1, h = 45, center = true, $fn = 36);
+		for(i = [-0.5:0.5]) translate([62.5*i, -3, 0]) cube([25, 8, 45], center = true);
+	}
+
 }
 
 module EndHangarsHoles(){
