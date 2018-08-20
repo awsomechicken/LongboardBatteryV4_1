@@ -95,6 +95,9 @@ difference(){
 	cylinder(d = 5.5, h = 6, center = true, $fn = 32);
 }//*/
 //MODULES
+
+$fn = 0;
+
 //////////////////////////////////////////////////////////////////////////////////
 
 module Pack(){
@@ -298,7 +301,49 @@ module EndHangars(place){
 	//translate([0, 0, 4.9718]) color("red") cube(20);//
 }
 
-!EndFlexHangars();
+!EndHangarsZippies(2);
+module EndHangarsZippies(place){
+	//Hangars to connect the ends of the aluminum to the board, {13 June, 2018}
+	// 'place' determines if a z-flip is happening, because you need one for each end of the pack.
+	difference(){
+		cylDiam = 5;
+		minkowski(){
+			difference(){
+				translate([0, -2.5, 0]) cube([55-cylDiam, 41, 30-cylDiam], center = true);//main body
+
+				translate([0, 0, 20]) rotate([-20, 0, 0]) cube([50, 50, 20], center = true);
+			}
+			rotate([90, 0, 0]) cylinder(d = cylDiam, h = 1, $fn = 6);
+		}
+
+		translate([61, -3.65, 0]) rotate([0, 0, -3.4]) deck(H = 80, F = true, G = false);//Deck Shape, with furrows
+
+		translate([18, 16.675, -8]) rotate([-90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//Brass insert, Rail side
+		translate([0, 16.675, -3]) rotate([-90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//Brass insert, Rail side
+		translate([-18, 16.675, -8]) rotate([-90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//Brass insert, Rail side
+
+		LVP = 8;//verticle position (Z) for the Deck side mounting holes
+
+		translate([20, -18, -LVP]) rotate([90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//+Z Brass insert, Deck side
+		translate([-20, -18, -LVP]) rotate([90, 0, 0]) cylinder(d = 5.5, h = 25, center = true, $fn = 36);//+Z Brass insert, Deck side
+		translate([20, -19, LVP]) rotate([-90, 0, 0]) M5(20, 25, 0.05);//-Z Fastner, Deck side
+		translate([-20, -19, LVP]) rotate([-90, 0, 0]) M5(20, 25, 0.05);//-Z Fastner, Deck side
+
+		//Lets' add a few zip ties
+		#for(i = [0:1:3]) translate([17*cos(360*(i/4)+45), 10*sin(360*(i/4)+45)-6, 0]) cube([5.125, 2, 35], center = true);
+
+		if(place == 2){
+			translate([0, -50+19.5, 0]) cube([65, 50, 35], center = true);
+		}
+		else if(place == 1){
+			translate([0, 19.5, 0]) cube([65, 50, 35], center = true);
+		}
+
+	}
+	//translate([0, 0, 4.9718]) color("red") cube(20);//
+}
+
+//EndFlexHangars();
 module EndFlexHangars(place){
 	//Hangars to connect the ends of the aluminum to the board, {13 June, 2018}
 	// 'place' determines if a z-flip is happening, because you need one for each end of the pack.
